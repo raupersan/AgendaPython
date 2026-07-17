@@ -2,31 +2,57 @@ from variables import ruta
 from contacto import Contacto
 from persona import Persona
 class Agenda:
-    def __init__(self):
-        self.listaContactos = []
+    def __init__(self, path):
+        self.__listaContactos = []
+        self.__Path = path
     def cargarContactos(self):
-        leerFichero = open(ruta, "r")
-        self.listaContactos = leerFichero.read()
-        print(self.listaContactos)
-        leerFichero.close()
-    def crearNuevoContacto(self):
-        contacto = contacto()
-        print("Creando nuevo contacto")
-        nombre = input(str("Introduce el nombre del contacto"))
-        contacto.setNombre
-        
-        self.listaContactos.append(contacto)
-        nuevoContacto = open(ruta,"a")
-        nuevoContacto.write(contacto)
-
-    def guardarContactos(self, contacto):
-        self.guardarContacto = open(ruta, "a")
-        #nuevoContacto = self.cargarContactos
-        self.listaContactos.append(contacto)
-
-pruebaAgenda = Agenda()
-pruebaAgenda.listaContactos += "a"
-pruebaAgenda.listaContactos += "b"
-contactos = pruebaAgenda.listaContactos
-for contacto in contactos:
-    print(contacto)
+        try:
+            leerFichero = open(ruta, "r")
+        except:
+            print("ERROR: Ese fichero no existe")
+        else:
+            contactos = leerFichero.readlines()
+            leerFichero.close()
+            if(len(contactos)>0):
+                for contacto in contactos:
+                    datos = contactos.spli("#")
+                    if(len(datos)==11):
+                        nuevoContacto = Contacto()
+                        nuevoContacto.setNombre(datos[0])
+                        nuevoContacto.setApellidos(datos[1])
+                        nuevoContacto.setFechaNacimiento(datos[2])
+                        nuevoContacto.setEmail(datos[3])
+                        nuevoContacto.setCalle(datos[4])
+                        nuevoContacto.setPiso(datos[5])
+                        nuevoContacto.setCiudad(datos[6])
+                        nuevoContacto.setCodigoPostal(datos[7])
+                        nuevoContacto.setTelefonoMovil(datos[8])
+                        nuevoContacto.setTelefonoFijo(datos[9])
+                        nuevoContacto.setTelefonoTrabajo(datos[10])
+                        self.__listaContactos = self.__listaContactos + [nuevoContacto]
+                print("Se han cargado ", len(self.__listaContactos), " contactos")
+    def crearNuevoContacto(self, nuevoContacto):
+        self.__listaContactos = self.__listaContactos + [nuevoContacto]
+    def guardarContactos(self):
+        try:
+            fichero = open(self.__Path, "w")
+        except:
+            print("ERROR: No se puede guardar el fichero")
+        else:
+            for contacto in self.__listaContactos:
+                texto = contacto.getNombre() + "#"
+                texto += contacto.getApellido() + "#"
+                texto += contacto.getFechaNacimiento() + "#"
+                texto += contacto.getEmail() + "#"                
+                texto += contacto.getCalle() + "#"
+                texto += contacto.getPiso() + "#"
+                texto += contacto.getCiudad() + "#"
+                texto += contacto.getCodigoPostal() + "#"
+                texto += contacto.getTelefonoMovil() + "#"
+                texto += contacto.getTelefonoFijo() + "#"
+                texto += contacto.getTelefonoTrabajo() + "\n"
+                fichero.write(texto)
+            fichero.close()
+    def mostrarAgenda(self):
+        #todo 
+        pass
