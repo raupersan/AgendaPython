@@ -54,5 +54,20 @@ class Agenda:
                 fichero.write(texto)
             fichero.close()
     def mostrarAgenda(self):
-        #todo 
-        pass
+        print("###### Agenda ######")
+        print("Numero de contactos: ", len(self.__listaContactos))
+        for contacto in self.__listaContactos:
+            contacto.MostrarContacto()
+        print("####################")
+    def buscarContactoPorNombre(self, nombre):
+        encontrados =[]
+        for contacto in self.__listaContactos:
+            if contacto.GetNombre() == nombre:
+                encontrados+= [contacto]
+        return encontrados
+    def buscarContactoPorTelefono(self, numero):
+        encontrados = []
+        for contacto in self.__listaContactos:
+            if (contacto.GetTelefonoMovil() == numero | contacto.GetTelefonoFijo() == numero |contacto.GetTelefonoTrabajo() == numero ):
+                encontrados += [contacto]
+        return encontrados
