@@ -71,3 +71,17 @@ class Agenda:
             if (contacto.GetTelefonoMovil() == numero | contacto.GetTelefonoFijo() == numero |contacto.GetTelefonoTrabajo() == numero ):
                 encontrados += [contacto]
         return encontrados
+    def borrarContactoPorNombre(self, nombre):
+        lista = []
+        for contacto in self.__listaContactos:
+            if contacto.getNombre() != nombre:
+                lista += [contacto]
+        print(len(self.__listaContactos) - lista, " contactos borrados")
+        self.__listaContactos = lista
+def borrarContactoPorTelefono(self, numero):
+        lista = []
+        for contacto in self.__listaContactos:
+            if (contacto.getTelefonoMovil() != numero | contacto.getTelefonoFijo() != numero | contacto.getTelefonoTrabajo() != numero):
+                lista += [contacto]
+        print(len(self.__listaContactos) - lista, " contactos borrados")
+        self.__listaContactos = lista
